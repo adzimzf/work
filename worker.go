@@ -254,6 +254,8 @@ func (w *worker) getAndDeleteUniqueJob(job *Job) *Job {
 		return nil
 	}
 
+	// todo bug:
+	// it's better to not supporting
 	// The job pulled off the queue was just a placeholder with no args, so replace it
 	jobWithArgs, err := newJob(rawJSON, job.dequeuedFrom, job.inProgQueue)
 	if err != nil {
