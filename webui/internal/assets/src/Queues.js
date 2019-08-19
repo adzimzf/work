@@ -6,11 +6,11 @@ import cx from './cx';
 export default class Queues extends React.Component {
   static propTypes = {
     url: PropTypes.string,
-  }
+  };
 
   state = {
     queues: []
-  }
+  };
 
   componentWillMount() {
     if (!this.props.url) {
@@ -19,8 +19,18 @@ export default class Queues extends React.Component {
     fetch(this.props.url).
       then((resp) => resp.json()).
       then((data) => {
-        this.setState({queues: data});
+        this.setState({queues: data.sort(this.sortedDesc)});
       });
+  }
+
+  sortedDesc(a, b){
+    let comparison = 0;
+    if (a.count > b.count){
+      comparison = -1;
+    }else if (a.count < b.count){
+      comparison = 1;
+    }
+    return comparison;
   }
 
   get queuedCount() {
@@ -43,7 +53,7 @@ export default class Queues extends React.Component {
             <tbody>
               <tr>
                 <th>Name</th>
-                <th>Count</th>
+                <th>Count (sorted desc)</th>
                 <th>Latency (seconds)</th>
               </tr>
               {

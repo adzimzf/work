@@ -8,7 +8,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/gocraft/work/webui"
+	"github.com/adzimzf/work/webui"
+
 	"github.com/gomodule/redigo/redis"
 )
 
@@ -58,5 +59,9 @@ func newPool(addr string, database int) *redis.Pool {
 			return redis.DialURL(addr, redis.DialDatabase(database))
 		},
 		Wait: true,
+		TestOnBorrow: func(c redis.Conn, t time.Time) error {
+			_, err := c.Do("PING")
+			return err
+		},
 	}
 }

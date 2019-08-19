@@ -1,0 +1,5 @@
+cmd/dev
+cmd/dev_worker
+webui/internal/assets/node_modules
+webui/internal/assets/package-lock.json
+.idea/*
